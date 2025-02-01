@@ -33,8 +33,33 @@ data = [[col.text.strip() for col in row.find_all("td")] for row in rows]
 # print(data)
 
 # create dataframe
-data_df = pd.DataFrame(data, columns=['Date', 'Revenue', 'Percentage Change'])
+data_df = pd.DataFrame(data, columns=['Date', 'Revenue', 'Percentage_Change'])
 
 # sort the data by date in descending order
 data_df = data_df.sort_values('Date', ascending=False)
-print(data_df)
+# print(data_df)
+
+# remove the '$' and 'B' in the dataframe
+data_df["Revenue"] = data_df["Revenue"].str.replace("[$B]", "", regex=True).astype(float)
+#print(data_df)
+
+# Connect to the database
+connection = sqlite3.connect('"tesla_revenues.db"')
+cursor = connection.cursor()
+
+# Create the table.
+cursor.execute("""
+CREATE TABLE IF NOT EXISTS revenue (
+    date TEXT,
+    revenue REAL
+)
+""")
+
+# Insert the values.
+data_list = data_df[["Date", "Revenue"]].values.tolist()
+cursor.executemany("INSERT INTO revenue (date, revenue) VALUES (?, ?)", data_list)
+
+
+# Store (commit) the changes.
+connection.commit()
+connection.close()
