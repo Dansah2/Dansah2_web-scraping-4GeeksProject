@@ -1,10 +1,16 @@
 <!--hide-->
-# Web scraping in Python - Step by step guide
+# 📈 Tesla Financial Web Scraper
 <!--endhide-->
 
-- Become familiar with a web environment in which you want to extract certain information.
-- Develop a code to obtain its content and extract it from a specific table.
-- Use a database to store the data and process it.
+## 🚀 Overview
+
+In this project, we:
+
+- Scrape historical market cap data for Tesla from a public HTML page.
+- Parse and structure the scraped content using `BeautifulSoup`.
+- Clean and transform the data into a usable format.
+- Store the clean data into an `SQLite` database.
+- Create meaningful visualizations to analyze Tesla's growth.
 
 ## 🌱 How to start this project
 
